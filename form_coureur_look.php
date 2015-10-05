@@ -12,16 +12,12 @@
       	$mdp = 'copie_tdf';
       	$instance = 'xe';
       	$conn = OuvrirConnexion($login, $mdp,$instance);
-      	$req = 'SELECT * FROM tdf_coureur order by nom';
+      	$req = 'SELECT * FROM tdf_coureur order by n_coureur desc';
       	$cur = PreparerRequete($conn,$req);
 	    $res = ExecuterRequete($cur); // Attention, pas &$nbLignes
 	    $nbLignes = LireDonnees2($cur,$tab);
 	    ?>
-	    <?php
-	    echo "<PRE>";
-	    print_r($tab);
-
-	   /*
+   
 	   <table>
 	    	<tr><td><b>N_COUREUR	 </b></td><td align="center"><b>	NOM</b></td><td><b>PRENOM</b></td></tr>
 	    <?php   
