@@ -135,7 +135,7 @@ function test_fonction($tab_test){
 }
 
 
-
+/*
 $chaine1="Ëlément";
 $chaine2="Bon  jour";
 $chaine3="COmment ça và clËment";
@@ -153,6 +153,6 @@ else echo "</br> Erreur Validation Prenom";
 $tab_test=array("Ébé-ébé","ébé-ébé","ébé-Ébé","éÉé-Ébé","'éÉ'é-É'bé'"
 	,"'éæé-É'bé'","'éæé-É'Ŭé'","'é !é-É'Ŭé'","éé''éé--uù  gg","DE LA TR€UC","DE LA TRUC",
 	"ééééééééééééééééééééééééééééééééééééééééééééééé","-péron-de - la   branche-");
-test_fonction($tab_test);
+test_fonction($tab_test);*/
 
 ?>

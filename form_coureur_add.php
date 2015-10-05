@@ -1,26 +1,14 @@
-<html>
-	<head>
-		<title>Formulaire d'Ajout d'un Coureur</title>
-		<meta charset="UTF-8"/>
-
+<?php
+	include("header.html");
+?>
+	<title>Formulaire Ajout Coureur</title>
+	<h1 style='font-variant:small-caps;text-align:center'>Consultation des Coureurs de la Base</h1>
 		<script>
 		   	function premierTDF(){
 		   		val=parseInt(document.getElementById("anneeNaiss").value)+parseInt(18);
 	    		document.getElementById("anneeTDF").min=val;
 	    	}
 		</script>
-	</head>
-
-	<body>
-		<header style="text-align:center;font-size:40;color:darkblue">Mise à Jour de la Base TDF</header>
-
-		<div> 	<table><tr>
-					<td><a href="index.php">Accueil</a></td>
-					<td style="border-right=0.5"><a href="select_consult.php" style="font-color:black">Consultation Tables</a></td>
-					<td><a href="select_insert.php">Insertion dans une Table</a></td>
-				</tr></table>
-
-		</div>
 
 		<?php
 		include("fonc_oracle.php");
@@ -35,8 +23,8 @@
 	    $nbLignes = LireDonneesPays($cur,$tab);
 		?>
 
-		<form name="form_add" action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
-			<table>
+		<form name="form_add" action="<?php $_SERVER['PHP_SELF'] ?>" method="POST" >
+			<table style="margin:auto">
 				<tr><td><label for="nom">Nom : </label></td>
 					<td><input type="text" id="nom" name="nom" required="required" style="width:100%"/></td></tr>
 				<tr><td><label for="prenom">Prénom : </label></td>
@@ -56,7 +44,7 @@
 				<tr><td><label for="dateTDF">Année TDF : </label></td>
 					<td><input type="number" id="anneeTDF" name="anneeTDF" min="" max="" style="width:100%"/></td></tr>	
 				<tr><td></br></td></tr>
-				<tr><td><input type="reset" id="annuler" value="Annuler" style="margin:right"/></td>
+				<tr style="text-align:center"><td><input type="reset" id="annuler" value="Annuler"/></td>
 							<td><input type="submit" id="valider" value="Ajouter"/></td></tr>
 
 
@@ -66,8 +54,6 @@
 
 		<?php
 		$valid=true;
-		echo "<PRE>";
-		print_r($_POST);
 		if(isset($_POST['nom'])){
 
 			if(isset($_POST['nom']))
@@ -96,35 +82,29 @@
 			else $valid=false;
 
 			if(isset($_POST['anneeTDF']))
-				if($anneeNaiss-$_POST['anneeTDF']>=0)
+				if($_POST['anneeTDF']-$anneeNaiss>=0)
 					$anneeTDF=$_POST['anneeTDF'];
 				else $valid=false;
-			else $valid=false;			
-		
+			else $valid=false;
+
 			if($valid){
-			$req_numero='SELECT max(N_COUREUR) as num_max from tdf_coureur';
-			$cur = PreparerRequete($conn,$req_numero);
-	    	$res = ExecuterRequete($cur); // Attention, pas &$nbLignes
-	    	$nbLignes = LireDonnees1($cur,$tab);
-	    	$n_coureur=$tab['NUM_MAX'][0]+1;
-	    	
-			$req_inser = 'INSERT INTO tdf_coureur (N_COUREUR,NOM,PRENOM,ANNEE_NAISSANCE,CODE_TDF,ANNEE_TDF) values ('.$n_coureur.',\''.$nom.'\',\''.$prenom.','.$anneeNaiss.','.$pays.'\','.$anneeTDF.')';
-      		
-      		echo $req_inser;
-      		/*$cur = PreparerRequete($conn,$req_inser);
-	    	$res = ExecuterRequete($cur); // Attention, pas &$nbLignes
-			
-			$req_commit='COMMIT';
-			$cur = PreparerRequete($conn,$req_commit);
-	    	$res = ExecuterRequete($cur);*/
+				$req_numero='SELECT max(N_COUREUR) as num_max from tdf_coureur';
+				$cur = PreparerRequete($conn,$req_numero);
+		    	$res = ExecuterRequete($cur); // Attention, pas &$nbLignes
+		    	$nbLignes = LireDonnees1($cur,$tab);
+		    	$n_coureur=$tab['NUM_MAX'][0]+1;
+		    	
+				$req_inser = 'INSERT INTO tdf_coureur (N_COUREUR,NOM,PRENOM,ANNEE_NAISSANCE,CODE_TDF,ANNEE_TDF) values ('.$n_coureur.',\''.$nom.'\',\''.$prenom.'\','.$anneeNaiss.',\''.$pays.'\','.$anneeTDF.')';
+	      		
+	      		//echo $req_inser;
+	      		$cur = PreparerRequete($conn,$req_inser);
+		    	$res = ExecuterRequete($cur); // Attention, pas &$nbLignes
+				if($res)alert("Insertion Effectée");
+				$req_commit='COMMIT';
+				$cur = PreparerRequete($conn,$req_commit);
+		    	$res = ExecuterRequete($cur);
 			}
 			else echo "Champ(s) Invalide(s) (non rempli ou incorrect)";
 		}
-		else echo "valeur non définie";
 		
-		?>
-
-	</body>
-
-
-</html>
+		include("footer.html");
