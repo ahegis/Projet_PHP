@@ -13,9 +13,8 @@
 		<?php
 		include("fonc_oracle.php");
 		include("fonc_text.php");
-		$login = "copie_tdf";
-      	$mdp = 'copie_tdf';
-      	$instance = 'xe';
+		include("fonc_sql.php");
+		include("log_bdd.php");
       	$conn = OuvrirConnexion($login, $mdp,$instance);
       	$req = 'SELECT code_tdf,nom FROM tdf_pays order by nom';
       	$cur = PreparerRequete($conn,$req);
@@ -97,12 +96,15 @@
 				$req_inser = 'INSERT INTO tdf_coureur (N_COUREUR,NOM,PRENOM,ANNEE_NAISSANCE,CODE_TDF,ANNEE_TDF) values ('.$n_coureur.',\''.$nom.'\',\''.$prenom.'\','.$anneeNaiss.',\''.$pays.'\','.$anneeTDF.')';
 	      		
 	      		//echo $req_inser;
-	      		$cur = PreparerRequete($conn,$req_inser);
-		    	$res = ExecuterRequete($cur); // Attention, pas &$nbLignes
-				if($res)alert("Insertion Effectée");
-				$req_commit='COMMIT';
-				$cur = PreparerRequete($conn,$req_commit);
-		    	$res = ExecuterRequete($cur);
+	      		if(!exist_coureur_inser($nom,$prenom,$pays)){
+	      			echo "insertion efectuée";
+	      			/*$cur = PreparerRequete($conn,$req_inser);
+		    		$res = ExecuterRequete($cur); // Attention, pas &$nbLignes
+					$req_commit='COMMIT';
+					$cur = PreparerRequete($conn,$req_commit);
+		    		$res = ExecuterRequete($cur);*/
+		    	}
+		    	else ?><script>window.alert("Coureur déjà présent dans la base");</script><?php
 			}
 			else echo "Champ(s) Invalide(s) (non rempli ou incorrect)";
 		}

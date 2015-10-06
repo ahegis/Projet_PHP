@@ -67,7 +67,22 @@ function LireDonnees2($cur,&$tab)
   }
   return $nbLignes;
 }
-
+function LireDonneesCoureur($cur,&$tab)
+{
+  $nbLignes = 0;
+  $i=0;
+  while ($row = oci_fetch_array ($cur, OCI_BOTH  )) 
+  {    
+    $tab[$nbLignes][$i]  = $row[0];
+    $tab[$nbLignes][$i+1]  = $row[1];
+    $tab[$nbLignes][$i+2]  = $row[2];
+    $tab[$nbLignes][$i+3]  = $row[3];
+    $tab[$nbLignes][$i+4]  = $row[4];
+    $tab[$nbLignes][$i+5]  = $row[5];
+  $nbLignes++;
+  }
+  return $nbLignes;
+}
 function LireDonneesPays($cur,&$tab)
 {
   $nbLignes = 0;
