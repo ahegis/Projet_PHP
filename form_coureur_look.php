@@ -11,14 +11,14 @@
       	$req = 'SELECT * FROM tdf_coureur order by n_coureur desc';
       	$cur = PreparerRequete($conn,$req);
 	    $res = ExecuterRequete($cur); // Attention, pas &$nbLignes
-	    $nbLignes = LireDonnees2($cur,$tab);
+	    $nbLignes = LireDonneesCoureur($cur,$tab);
 	    ?>
    
 	   <table style="text-align:center;margin:auto">
-	    	<tr><td><b>N_COUREUR	 </b></td><td align="center"><b>	NOM</b></td><td><b>PRENOM</b></td><td colspan="2"><b>OPERATIONS</b></td></tr>
+	    	<tr style="font-weight:bold"><td>N_COUREUR</td><td align="center">NOM</td><td>PRENOM</td><td>CODE TDF</td><td>ANNEE NAISSANCE</td><td>ANNEE TDF</td><td colspan="2">OPERATIONS</td></tr>
 	    <?php   
 	    foreach($tab as $i){
-	    	echo "<tr><td>$i[0]</td><td align='center'>$i[1]</td><td>".utf8_encode($i[2])."</td>"?>
+	    	echo "<tr><td>$i[0]</td><td align='center'>$i[1]</td><td>".utf8_encode($i[2])."</td><td>$i[4]</td><td>$i[3]</td><td>$i[5]</td>";?>
 	    			<form action="modif_coureur.php" method='POST'><td><input type='submit' name='modif' value='Modifier'/><?php echo "<input type=\"hidden\" name=\"n_coureur\" value=\"$i[0]\";/>"?></td></form>
 	    			<form action="confirm_suppr_coureur.php" method='POST'><td><input type='submit' name='modif' value='Supprimer'/><?php echo "<input type=\"hidden\" name=\"n_coureur\" value=\"$i[0]\";/>"?></td></form>
 	    	<?php echo"</tr>";

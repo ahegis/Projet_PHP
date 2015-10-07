@@ -134,6 +134,11 @@ function test_fonction($tab_test){
 
 }
 
+function test_var_vide($chaine){
+	if(isset($chaine))return $chaine;
+	else return "'null'";
+}
+
 
 /*
 $chaine1="Ëlément";

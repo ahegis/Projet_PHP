@@ -76,9 +76,13 @@ function LireDonneesCoureur($cur,&$tab)
     $tab[$nbLignes][$i]  = $row[0];
     $tab[$nbLignes][$i+1]  = $row[1];
     $tab[$nbLignes][$i+2]  = $row[2];
-    $tab[$nbLignes][$i+3]  = $row[3];
+    if(isset($row[3]))
+      $tab[$nbLignes][$i+3]  = $row[3];
+    else $tab[$nbLignes][$i+3] = "";
     $tab[$nbLignes][$i+4]  = $row[4];
-    $tab[$nbLignes][$i+5]  = $row[5];
+    if(isset($row[5]))
+      $tab[$nbLignes][$i+5]  = $row[5];
+    else $tab[$nbLignes][$i+5] = "";
   $nbLignes++;
   }
   return $nbLignes;
