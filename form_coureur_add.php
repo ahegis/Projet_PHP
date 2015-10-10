@@ -52,50 +52,20 @@
 		</form>
 
 		<?php
-		$valid=true;
 		if(isset($_POST['nom'])){
 
-			if(isset($_POST['nom']))
-				if(verif_caractere($_POST['nom']))
-					$nom=valid_nom($_POST['nom']);
-				else $valid=false;
-			else $valid=false;
+			$tab_verif=verif_valeur_inser($_POST['nom'],$_POST['prenom'],$_POST['anneeNaiss'],$_POST['pays'],$_POST['anneeTDF']);
 
-			if(isset($_POST['prenom']))
-				if(verif_caractere($_POST['prenom']))
-					$prenom=valid_prenom($_POST['prenom']);
-				else $valid=false;
-			else $valid=false;
-
-			if(isset($_POST['anneeNaiss']) and $_POST['anneeNaiss']!="")
-				$anneeNaiss=$_POST['anneeNaiss'];
-			else $anneeNaiss='null';
-
-			if(isset($_POST['pays'])){
-				$pays_valid=false;
-				for($i=0;$i<$nbLignes;$i++){
-					if($_POST['pays']==$tab[$i][0])$pays_valid=true;
-				}
-				if($pays_valid)$pays=$_POST['pays'];
-			}
-			else $valid=false;
-
-			if(isset($_POST['anneeTDF']) and $_POST['anneeTDF']!="")
-				if($_POST['anneeTDF']-$anneeNaiss>=0)
-					$anneeTDF=$_POST['anneeTDF'];
-				else $valid=false;
-			else $anneeTDF='null';
-
-			if($valid){
+			if($tab_verif[0]){
 				$req_numero='SELECT max(N_COUREUR) as num_max from tdf_coureur';
 				$cur = PreparerRequete($conn,$req_numero);
 		    	$res = ExecuterRequete($cur); // Attention, pas &$nbLignes
 		    	$nbLignes = LireDonnees1($cur,$tab);
 		    	$n_coureur=$tab['NUM_MAX'][0]+1;
 				$req_inser = 'INSERT INTO tdf_coureur (N_COUREUR,NOM,PRENOM,ANNEE_NAISSANCE,CODE_TDF,ANNEE_TDF) 
-				values ('.$n_coureur.',\''.$nom.'\',\''.$prenom.'\','.($anneeNaiss).',\''.$pays.'\','.($anneeTDF).')';
-
-	      		if(!exist_coureur_inser($nom,$prenom,$pays)){
+				values ('.$n_coureur.',\''.$tab_verif[1].'\',\''.$tab_verif[2].'\','.$tab_verif[3].',\''.$tab_verif[4].'\','.$tab_verif[5].')';
+	      		
+	      		if(!exist_coureur_inser($tab_verif[1],$tab_verif[2],$tab_verif[4])){
 	      			$cur = PreparerRequete($conn,$req_inser);
 		    		$res = ExecuterRequete($cur); // Attention, pas &$nbLignes
 					$req_commit='COMMIT';
@@ -105,6 +75,6 @@
 		    	}
 		    	else {?><script>window.alert("Coureur déjà présent dans la base");</script><?php echo "";}
 			}
-			else echo ("Champ(s) Invalide(s) ( Incomplet(s) ou Vide(s) )");}
-
+			else {?><script>window.alert("Champ(s) Invalide(s) ( Incomplet(s) ou Vide(s) )");</script><?php echo "";}
+		}
 		include("footer.html");
