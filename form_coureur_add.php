@@ -61,7 +61,7 @@
 				$cur = PreparerRequete($conn,$req_numero);
 		    	$res = ExecuterRequete($cur); // Attention, pas &$nbLignes
 		    	$nbLignes = LireDonnees1($cur,$tab);
-		    	$n_coureur=$tab['NUM_MAX'][0]+1;
+		    	$n_coureur=$tab['NUM_MAX'][0]+5;
 				$req_inser = 'INSERT INTO tdf_coureur (N_COUREUR,NOM,PRENOM,ANNEE_NAISSANCE,CODE_TDF,ANNEE_TDF) 
 				values ('.$n_coureur.',\''.$tab_verif[1].'\',\''.$tab_verif[2].'\','.$tab_verif[3].',\''.$tab_verif[4].'\','.$tab_verif[5].')';
 	      		
@@ -72,6 +72,7 @@
 					$cur = PreparerRequete($conn,$req_commit);
 		    		$res = ExecuterRequete($cur);
 		    		?><script>window.alert("Coureur inséré dans la base");</script><?php
+		    		header("location:form_coureur_look.php");
 		    	}
 		    	else {?><script>window.alert("Coureur déjà présent dans la base");</script><?php echo "";}
 			}

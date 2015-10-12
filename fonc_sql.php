@@ -65,7 +65,11 @@ function verif_valeur_inser($nom,$prenom,$anneeNaiss,$pays,$anneeTDF){
 				else $tab[0]=false;
 
 				if(isset($anneeNaiss) and $anneeNaiss!="")
-					$tab[3]=$anneeNaiss;
+					if((date('Y')-$anneeNaiss)>=18)$tab[3]=$anneeNaiss;
+					else {
+						$tab[0]=false;
+						$tab[3]='null';
+					}
 				else $tab[3]='null';
 
 				if(isset($pays)){
@@ -97,5 +101,18 @@ function exist_participation($n_coureur){
 	$nbLignes = LireDonnees1($cur,$tab);
 	return $nbLignes;
 
+}
+
+function exist_annee($annee){
+	include("log_bdd.php");
+	$conn = OuvrirConnexion($login, $mdp,$instance);
+	$req = 'SELECT * FROM tdf_annee WHERE ANNEE='.$annee;
+	$cur = PreparerRequete($conn,$req);
+	$res = ExecuterRequete($cur); // Attention, pas &$nbLignes
+	$nbLignes = LireDonnees1($cur,$tab);
+	if(isset($nbLignes)){	
+		if ($nbLignes>=1)return true;
+		else return false;
+	}
 }
 ?>

@@ -19,11 +19,16 @@
 	    <?php   
 	    foreach($tab as $i){
 	    	echo "<tr><td>$i[0]</td><td align='center'>$i[1]</td><td>".utf8_encode($i[2])."</td><td>$i[4]</td><td>$i[3]</td><td>$i[5]</td>";?>
-	    			<form action="modif_coureur.php" method='POST'><td><input type='submit' name='modif' value='Modifier'/><?php echo "<input type=\"hidden\" name=\"n_coureur\" value=\"$i[0]\";/>"?></td></form>
+	    			<?php /*<form action="modif_coureur.php" method='POST'><td><input type='submit' name='modif' value='Modifier'/><?php echo "<input type=\"hidden\" name=\"n_coureur\" value=\"$i[0]\";/>"?></td></form>
 	    			<form action="confirm_suppr_coureur.php" method='POST'><td><input type='submit' name='modif' value='Supprimer'/><?php echo "<input type=\"hidden\" name=\"n_coureur\" value=\"$i[0]\";/>"?></td></form>
+	    			*/?>
+	    			<form action="form_coureur_operation.php" method='POST'><td><input type='submit' name='modifier' value='Modifier'/><?php echo "<input type=\"hidden\" name=\"n_coureur\" value=\"$i[0]\";/>"?></td>
+	    				<td><input type='submit' name='supprimer' value='Supprimer'/></td></form>
 	    	<?php echo"</tr>";
 	    }
 	    ?></table><?php
+
+	    /*<*/
 	    FermerConnexion($conn);
 
 	    include("footer.html");

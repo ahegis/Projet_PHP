@@ -9,6 +9,7 @@
 			<select id="table" name="table">
 				<option value"none">Non Selectionné</option>
 				<option value="TDF_COUREUR">TDF_COUREUR</option>
+				<option value="TDF_ANNEE">TDF_ANNEE</option>
 			</select>
 			</br></br>
 			<input type="submit" name="valider" value="valider"/>
@@ -22,6 +23,8 @@
 				$table=$_POST['table'];
 				switch($table){
 					case "TDF_COUREUR":	header("location:form_coureur_add.php");
+										break;
+					case "TDF_ANNEE" : 	header("location:form_annee_add.php");
 										break;
 				}
 			}
