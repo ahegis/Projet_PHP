@@ -54,7 +54,7 @@
 		<?php
 		if(isset($_POST['nom'])){
 
-			$tab_verif=verif_valeur_inser($_POST['nom'],$_POST['prenom'],$_POST['anneeNaiss'],$_POST['pays'],$_POST['anneeTDF']);
+			$tab_verif=verif_inser_coureur($_POST['nom'],$_POST['prenom'],$_POST['anneeNaiss'],$_POST['pays'],$_POST['anneeTDF']);
 
 			if($tab_verif[0]){
 				$req_numero='SELECT max(N_COUREUR) as num_max from tdf_coureur';

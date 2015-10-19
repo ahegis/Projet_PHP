@@ -41,7 +41,7 @@ function exist_coureur_update($n_coureur,$nom,$prenom,$code_tdf){
 	}
 }
 
-function verif_valeur_inser($nom,$prenom,$anneeNaiss,$pays,$anneeTDF){
+function verif_inser_coureur($nom,$prenom,$anneeNaiss,$pays,$anneeTDF){
 	include("log_bdd.php");
 	$conn = OuvrirConnexion($login, $mdp,$instance);
 	$req_pays = 'SELECT code_tdf,nom FROM tdf_pays order by nom';
@@ -92,6 +92,32 @@ function verif_valeur_inser($nom,$prenom,$anneeNaiss,$pays,$anneeTDF){
 	return $tab;
 }
 
+function verif_inser_annee($annee,$nb_jour){
+	include("log_bdd.php");
+	$conn = OuvrirConnexion($login, $mdp,$instance);
+	$req_annee = 'SELECT annee,jour_repos FROM tdf_annee';
+	$cur = PreparerRequete($conn,$req_annee);
+	$res = ExecuterRequete($cur); // Attention, pas &$nbLignes
+	$nbLignes = LireDonneesAnnee($cur,$tab_annee);
+	$tab[0]=false;
+
+	$annee_valid=false;
+	for($i=0;$i<$nbLignes;$i++){
+		if($annee==$tab_annee[$i][0])$annee_valid=true;
+	}
+	if($annee_valid){
+		$tab[1]=$annee;
+		$tab[0]=true;
+	}
+
+	if($nb_jour>0 && $nb_jour<10){
+		$tab[0]=true;
+		$tab[2]=$nb_jour;
+	}
+
+	return $tab;			
+}
+
 function exist_participation($n_coureur){
 	include("log_bdd.php");
 	$conn = OuvrirConnexion($login, $mdp,$instance);
@@ -114,5 +140,10 @@ function exist_annee($annee){
 		if ($nbLignes>=1)return true;
 		else return false;
 	}
+}
+
+function exist_lien_annee($annee){
+	//
+	return 0;
 }
 ?>

@@ -99,6 +99,40 @@ function LireDonneesPays($cur,&$tab)
   }
   return $nbLignes;
 }
+
+function LireDonneesEpreuve($cur,&$tab)
+{
+  $nbLignes = 0;
+  $i=0;
+  while ($row = oci_fetch_array ($cur, OCI_BOTH  )) 
+  {    
+    $tab[$nbLignes][$i]  = $row[0];
+    $tab[$nbLignes][$i+1]  = $row[1];
+    $tab[$nbLignes][$i+2]  = $row[2];
+    $tab[$nbLignes][$i+3]  = $row[3];
+    $tab[$nbLignes][$i+4]  = $row[4];
+    if(isset($row[5]))
+    $tab[$nbLignes][$i+5]  = $row[5];
+    else $tab[$nbLignes][$i+5] = "";
+    $tab[$nbLignes][$i+6]  = $row[6];
+    $tab[$nbLignes][$i+7]  = $row[7];
+    $tab[$nbLignes][$i+8]  = $row[8];
+    $tab[$nbLignes][$i+9]  = $row[9];
+  $nbLignes++;
+  }
+  return $nbLignes;
+}
+
+function LireDonneesAnnee($cur,&$tab){
+  $nbLignes = 0;
+  $i=0;
+  while ($row = oci_fetch_array ($cur, OCI_BOTH  )) 
+  {
+    $tab[$nbLignes][$i]  = $row[0];
+    $tab[$nbLignes][$i+1]  = $row[1];
+    $nbLignes++;
+  }
+}
 //---------------------------------------------------------------------------------------------
 function LireDonnees3($cur,&$tab)
 {

@@ -12,10 +12,10 @@
 		include("fonc_text.php");
 		include("log_bdd.php");
       	$conn = OuvrirConnexion($login, $mdp,$instance);
-      	$selec_suppr = 'SELECT * FROM tdf_annee WHERE ANNEE=\''.$_POST['annee'].'\'';
+      	$selec_suppr = 'SELECT ANNEE,JOUR_REPOS FROM tdf_annee WHERE ANNEE=\''.$_POST['annee'].'\'';
       	$cur = PreparerRequete($conn,$selec_suppr);
 	    $res = ExecuterRequete($cur);
-	    $nbLignes = LireDonnees2($cur,$tab_annee);
+	    $nbLignes = LireDonneesAnnee($cur,$tab_annee);
 
 	    //si l'on choisit "supprimer" depuis le formulaire de consultation
 	    if((isset($_POST['modif']) && $_POST['modif']=="Supprimer") || (isset($_POST['action']) && $_POST['action']=="supprimer")){
@@ -28,15 +28,14 @@
 					<td>NB JOURS REPOS : </td><td><?php echo $tab_annee[0][1];?></td></tr>
 				
 					<form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
-					<tr><td colspan=2 style="text-align:right;padding-top:20px"><input type="submit" name="annuler" value="NON"/><input type="hidden" name="n_coureur" value=<?php echo '"'.$tab_annee[0][0].'"';?> /><input type="hidden" name="action" value="supprimer"/></td>
+					<tr><td colspan=2 style="text-align:right;padding-top:20px"><input type="submit" name="annuler" value="NON"/><input type="hidden" name="annee" value=<?php echo '"'.$tab_annee[0][0].'"';?> /><input type="hidden" name="action" value="supprimer"/></td>
 					<td style="padding-top:20px"><input type="submit" name="confirmer" value="OUI"/></td></tr></form>
 			</table>
 
 			<?php
 		
 			if(isset($_POST["confirmer"])){
-				if(exist_participation($_POST['n_coureur'])==0){
-					echo exist_participation($_POST['n_coureur']);
+				if(exist_lien_annee($_POST['annee'])==0){
 					$req_suppr = 'DELETE FROM tdf_annee WHERE ANNEE=\''.$_POST['annee'].'\'';
 					$cur = PreparerRequete($conn,$req_suppr);
 			    	$res = ExecuterRequete($cur); // Attention, pas &$nbLignes
@@ -45,7 +44,7 @@
 				    $res = ExecuterRequete($cur);
 				    header("location:form_annee_look.php");
 				}
-				else {?><script>window.alert("Impossible de supprimer le coureur, il est associé à au moins une participation");</script><?php
+				else {?><script>window.alert("Impossible de supprimer l'année, il est associé à au moins une ligne de la base");</script><?php
 					echo "";}
 			}
 			else if(isset($_POST["annuler"])){
@@ -58,31 +57,24 @@
 	    else if((isset($_POST['modif']) && $_POST['modif']=="Modifier") || (isset($_POST['action']) && $_POST['action']=="modifier")){
 	    	
 	    	if(isset($_POST["confirmer"])){
-				/*$nb_jour_repos=*/
+				$tab_verif=verif_inser_annee($_POST['annee'],$_POST['n_repos']);
 			
 		    if($tab_verif[0]){
 				$req_numero='SELECT max(N_COUREUR) as num_max from tdf_coureur';
 				$cur = PreparerRequete($conn,$req_numero);
 		    	$res = ExecuterRequete($cur); // Attention, pas &$nbLignes
 		    	$nbLignes = LireDonnees1($cur,$tab);
-				$req_update = "UPDATE tdf_coureur set
-								NOM='".$tab_verif[1]."',
-								PRENOM='".$tab_verif[2]."',
-								ANNEE_NAISSANCE=".$tab_verif[3].",
-								CODE_TDF='".$tab_verif[4]."',
-								ANNEE_TDF=".$tab_verif[5]." WHERE N_COUREUR=".$_POST['n_coureur'];
-	      		
-	      		if(!exist_coureur_update($_POST['n_coureur'],$tab_verif[1],$tab_verif[2],$tab_verif[4])){
-	      			$cur = PreparerRequete($conn,$req_update);
-		    		$res = ExecuterRequete($cur); // Attention, pas &$nbLignes
-					$req_commit='COMMIT';
-					$cur = PreparerRequete($conn,$req_commit);
-		    		$res = ExecuterRequete($cur);
-		    		?><script>window.alert("Annee Modifié");</script><?php
-		    		header("location:form_annee_look.php");
-		    	}
-		    	else {?><script>window.alert("Impossible de modifier l'année");</script><?php echo "";}
-			}
+				$req_update = "UPDATE tdf_annee set
+								JOUR_REPOS='".$tab_verif[2]."' WHERE ANNEE=".$_POST['annee'];
+	      	
+	      		$cur = PreparerRequete($conn,$req_update);
+		    	$res = ExecuterRequete($cur); // Attention, pas &$nbLignes
+				$req_commit='COMMIT';
+				$cur = PreparerRequete($conn,$req_commit);
+		    	$res = ExecuterRequete($cur);
+		    	?><script>window.alert("Annee Modifié");</script><?php
+		    	header("location:form_annee_look.php");
+		    }
 			else {?><script>window.alert("Champ(s) Invalide(s) ( Incomplet(s) ou Vide(s) )");</script><?php echo "";}
 		}
 
@@ -97,10 +89,10 @@
 	    	<table style="margin:auto"><tr><td colspan=5 style="text-align:center;font-weight:bold;padding-bottom:30px">Modification du Coureur</td></tr>
 			<tr><td>ANNEE : </td><td><?php echo $tab_annee[0][0];?></td></tr>
 			<form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">	
-				<tr><td>NB JOURS REPOS : </td><td><?php echo "<input type='number' name='n_repos' value='".$tab_annee[0][1]."' min='0' style='width:100%'/></td>";?>
+				<tr><td>NB JOURS REPOS : </td><td><?php echo "<input type='number' name='n_repos' value='".$tab_annee[0][1]."' min='0' max='9'style='width:100%'/></td>";?>
 				
 			
-				<tr><td colspan=2 style="text-align:right;padding-top:20px"><input type="submit" name="annuler" value="Annuler"/><input type="hidden" name="n_coureur" value=<?php echo '"'.$tab_annee[0][0].'"';?> /><input type="hidden" name="action" value="modifier"/></td>
+				<tr><td colspan=2 style="text-align:right;padding-top:20px"><input type="submit" name="annuler" value="Annuler"/><input type="hidden" name="annee" value=<?php echo '"'.$tab_annee[0][0].'"';?> /><input type="hidden" name="action" value="modifier"/></td>
 					<td style="padding-top:20px"><input type="submit" name="confirmer" value="Confirmer"/></td></tr></form>
 	</table>
 
