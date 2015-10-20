@@ -4,13 +4,16 @@
 //---------------------------------------------------------------------------------------------
 function OuvrirConnexion($session,$mdp,$instance)
 {
-  $conn = oci_connect($session, $mdp,$instance);
+  @$conn = oci_connect($session, $mdp,$instance);
   if (!$conn) //si pas de connexion retourne une erreur
   {  
-	$e = oci_error();
+	@$e = oci_error();
 	//avec un message pour pouvoir revenir à la page de connexion
-	echo "<br>Votre nom d'utilisateur ou votre mot de passe est &eacute;ronn&eacute;e, veuillez vous reconnecter...<br>";
-	echo "<form action = 'p1202_1.htm' method='post' enctype='application/x-www-form-urlencoded'>
+  switch($e['code']){
+    case 12514 : $msg_error="Base éteinte";break;
+  }
+  echo "Erreur de Connection à la Base : $msg_error<br><br>";
+	echo "<form action = 'index.php' method='post' enctype='application/x-www-form-urlencoded'>
 				<input type='submit' value='Retour'>
 		  </form>";
 	exit;

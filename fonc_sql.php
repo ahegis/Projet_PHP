@@ -146,4 +146,43 @@ function exist_lien_annee($annee){
 	//
 	return 0;
 }
+
+function exist_epreuve($annee,$n_epreuve){
+	include("log_bdd.php");
+	$conn = OuvrirConnexion($login, $mdp,$instance);
+	$req = 'SELECT * FROM tdf_epreuve WHERE ANNEE='.$annee.'AND N_EPREUVE='.$n_epreuve;
+	$cur = PreparerRequete($conn,$req);
+	$res = ExecuterRequete($cur);
+	$nbLignes = LireDonnees1($cur,$tab);
+	if(isset($nbLignes)){	
+		if ($nbLignes>=1)return true;
+		else return false;
+	}
+}
+
+function verif_inser_epreuve($annee,$n_epreuve,$villeDepart,$paysDepart,
+				$villeArrivee,$paysArrivee,$distance,$moyenne,$jour,$type){
+	include("log_bdd.php");
+	$conn = OuvrirConnexion($login, $mdp,$instance);
+	$req_annee = 'SELECT annee,jour_repos FROM tdf_annee';
+	$cur = PreparerRequete($conn,$req_annee);
+	$res = ExecuterRequete($cur);
+	$nbLignes = LireDonneesPays($cur,$tab_annee);
+
+	$tab[0]=true;
+	if(isset($annee)){
+		$annee_valid=false;
+		for($i=0;$i<$nbLignes;$i++){
+			if($annee==$tab_annee[$i][0])$annee_valid=true;
+		}
+		if($annee_valid)$tab[1]=$annee;
+		else $tab[0]=false;
+	}
+	if($n_epreuve>0 && $n_epreuve<=25)$tab[2]=$n_epreuve;
+	else $tab[0]=false;
+
+	
+
+
+}
 ?>
