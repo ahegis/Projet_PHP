@@ -45,17 +45,17 @@
 	    		if($tab_annee[$i][0]==$_POST['annee'])$valid=true;
 	    	}
 
-	    	if($_POST['nb_repos']>=0)$valid=true;
+	    	if($_POST['nb_repos']>=0 && $_POST['nb_repos']<10)$valid=true;
 
 	    	if($valid){
       			if(!exist_annee($_POST['annee'])){
-	      			$req_annee_inser = 'INSERT INTO tdf_annee values ('.$_POST['annee'].','.$_POST['nb_repos'].')';
+	      			$req_annee_inser = 'INSERT INTO tdf_annee (ANNEE,JOUR_REPOS) values ('.$_POST['annee'].','.$_POST['nb_repos'].')';
 	      			echo $req_annee_inser;
-	      			/*$cur = PreparerRequete($conn,$req_annee_inser);
+	      			$cur = PreparerRequete($conn,$req_annee_inser);
 		    		$res = ExecuterRequete($cur);
 		    		$req_commit='COMMIT';
 					$cur = PreparerRequete($conn,$req_commit);
-		    		$res = ExecuterRequete($cur);*/
+		    		$res = ExecuterRequete($cur);
 		    	}
 		    	else echo "Annee deja existante";
 	    	}

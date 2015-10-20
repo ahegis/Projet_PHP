@@ -11,7 +11,7 @@
       	$req = 'SELECT * FROM tdf_annee order by annee asc';
       	$cur = PreparerRequete($conn,$req);
 	    $res = ExecuterRequete($cur); // Attention, pas &$nbLignes
-	    $nbLignes = LireDonnees2($cur,$tab);
+	    $nbLignes = LireDonneesAnnee($cur,$tab);
 	    ?>
    
 	   <table style="text-align:center;margin:auto">
