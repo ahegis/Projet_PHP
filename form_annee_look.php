@@ -8,7 +8,7 @@
 		include("fonc_oracle.php");
 		include("log_bdd.php");
       	$conn = OuvrirConnexion($login, $mdp,$instance);
-      	$req = 'SELECT * FROM tdf_annee order by annee asc';
+      	$req = 'SELECT * FROM tdf_annee order by annee desc';
       	$cur = PreparerRequete($conn,$req);
 	    $res = ExecuterRequete($cur); // Attention, pas &$nbLignes
 	    $nbLignes = LireDonneesAnnee($cur,$tab);

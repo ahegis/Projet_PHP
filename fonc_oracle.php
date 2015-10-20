@@ -4,13 +4,16 @@
 //---------------------------------------------------------------------------------------------
 function OuvrirConnexion($session,$mdp,$instance)
 {
-  $conn = oci_connect($session, $mdp,$instance);
+  @$conn = oci_connect($session, $mdp,$instance);
   if (!$conn) //si pas de connexion retourne une erreur
   {  
-	$e = oci_error();
+	@$e = oci_error();
 	//avec un message pour pouvoir revenir à la page de connexion
-	echo "<br>Votre nom d'utilisateur ou votre mot de passe est &eacute;ronn&eacute;e, veuillez vous reconnecter...<br>";
-	echo "<form action = 'p1202_1.htm' method='post' enctype='application/x-www-form-urlencoded'>
+  switch($e['code']){
+    case 12514 : $msg_error="Base éteinte";break;
+  }
+  echo "Erreur de Connection à la Base : $msg_error<br><br>";
+	echo "<form action = 'index.php' method='post' enctype='application/x-www-form-urlencoded'>
 				<input type='submit' value='Retour'>
 		  </form>";
 	exit;
@@ -100,18 +103,51 @@ function LireDonneesPays($cur,&$tab)
   return $nbLignes;
 }
 
+<<<<<<< HEAD
 function LireDonneesAnnee($cur,&$tab)
+=======
+function LireDonneesEpreuve($cur,&$tab)
+>>>>>>> origin/master
 {
   $nbLignes = 0;
   $i=0;
   while ($row = oci_fetch_array ($cur, OCI_BOTH  )) 
   {    
+<<<<<<< HEAD
     $tab[$nbLignes][$i]  = $row['ANNEE'];
     $tab[$nbLignes][$i+1]  = $row['JOUR_REPOS'];
+=======
+    $tab[$nbLignes][$i]  = $row[0];
+    $tab[$nbLignes][$i+1]  = $row[1];
+    $tab[$nbLignes][$i+2]  = $row[2];
+    $tab[$nbLignes][$i+3]  = $row[3];
+    $tab[$nbLignes][$i+4]  = $row[4];
+    if(isset($row[5]))
+    $tab[$nbLignes][$i+5]  = $row[5];
+    else $tab[$nbLignes][$i+5] = "";
+    $tab[$nbLignes][$i+6]  = $row[6];
+    $tab[$nbLignes][$i+7]  = $row[7];
+    $tab[$nbLignes][$i+8]  = $row[8];
+    $tab[$nbLignes][$i+9]  = $row[9];
+>>>>>>> origin/master
   $nbLignes++;
   }
   return $nbLignes;
 }
+<<<<<<< HEAD
+=======
+
+function LireDonneesAnnee($cur,&$tab){
+  $nbLignes = 0;
+  $i=0;
+  while ($row = oci_fetch_array ($cur, OCI_BOTH  )) 
+  {
+    $tab[$nbLignes][$i]  = $row[0];
+    $tab[$nbLignes][$i+1]  = $row[1];
+    $nbLignes++;
+  }
+}
+>>>>>>> origin/master
 //---------------------------------------------------------------------------------------------
 function LireDonnees3($cur,&$tab)
 {

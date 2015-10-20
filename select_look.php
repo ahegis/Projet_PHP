@@ -10,6 +10,7 @@
 				<option value"none">Non Selectionné</option>
 				<option value="TDF_COUREUR">TDF_COUREUR</option>
 				<option value="TDF_ANNEE">TDF_ANNEE</option>
+				<option value="TDF_EPREUVE">TDF EPREUVE</option>
 			</select>
 			</br></br>
 			<input type="submit" name="valider" value="valider"/>
@@ -25,6 +26,8 @@
 					case "TDF_COUREUR":	header("location:form_coureur_look.php");
 										break;
 					case "TDF_ANNEE" : 	header("location:form_annee_look.php");
+										break;
+					case "TDF_EPREUVE" : header("location:form_epreuve_look.php");
 										break;
 				}
 			}

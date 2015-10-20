@@ -37,7 +37,7 @@
       		$req_annee = 'SELECT * FROM tdf_annee';
       		$cur = PreparerRequete($conn,$req_annee);
 	    	$res = ExecuterRequete($cur);
-	    	$nbLignes = LireDonnees2($cur,$tab_annee);
+	    	$nbLignes = LireDonneesAnnee($cur,$tab_annee);
 
 	    	$valid=false;
 
@@ -56,8 +56,13 @@
 		    		$req_commit='COMMIT';
 					$cur = PreparerRequete($conn,$req_commit);
 		    		$res = ExecuterRequete($cur);
+<<<<<<< HEAD
+=======
+		    		header("location:form_annee_look.php");
+>>>>>>> origin/master
 		    	}
-		    	else echo "Annee deja existante";
+		    	else {?><script>window.alert("Année déjà existante");</script><?php
+					echo "";}
 	    	}
 		}
 
