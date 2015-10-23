@@ -103,12 +103,20 @@ function LireDonneesPays($cur,&$tab)
   return $nbLignes;
 }
 
+<<<<<<< HEAD
+function LireDonneesAnnee($cur,&$tab)
+=======
 function LireDonneesEpreuve($cur,&$tab)
+>>>>>>> origin/master
 {
   $nbLignes = 0;
   $i=0;
   while ($row = oci_fetch_array ($cur, OCI_BOTH  )) 
   {    
+<<<<<<< HEAD
+    $tab[$nbLignes][$i]  = $row['ANNEE'];
+    $tab[$nbLignes][$i+1]  = $row['JOUR_REPOS'];
+=======
     $tab[$nbLignes][$i]  = $row[0];
     $tab[$nbLignes][$i+1]  = $row[1];
     $tab[$nbLignes][$i+2]  = $row[2];
@@ -121,10 +129,13 @@ function LireDonneesEpreuve($cur,&$tab)
     $tab[$nbLignes][$i+7]  = $row[7];
     $tab[$nbLignes][$i+8]  = $row[8];
     $tab[$nbLignes][$i+9]  = $row[9];
+>>>>>>> origin/master
   $nbLignes++;
   }
   return $nbLignes;
 }
+<<<<<<< HEAD
+=======
 
 function LireDonneesAnnee($cur,&$tab){
   $nbLignes = 0;
@@ -136,6 +147,7 @@ function LireDonneesAnnee($cur,&$tab){
     $nbLignes++;
   }
 }
+>>>>>>> origin/master
 //---------------------------------------------------------------------------------------------
 function LireDonnees3($cur,&$tab)
 {
@@ -197,6 +209,13 @@ function AfficherDonnee3($tab,$nb)
     echo $tab[$i][0]." ".$tab[$i][1]." ".$tab[$i][2]."\n";
 }
 //---------------------------------------------------------------------------------------------
+
+function ResultatRequete($conn,$req,&$tab){
+  $cur = PreparerRequete($conn,$req);
+  $res = ExecuterRequete($cur); // Attention, pas &$nbLignes
+  $nbLignes = LireDonnees1($cur,$tab);
+  return $nbLignes;
+}
 ?>
 
 

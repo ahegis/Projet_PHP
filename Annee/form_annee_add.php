@@ -45,7 +45,7 @@
 	    		if($tab_annee[$i][0]==$_POST['annee'])$valid=true;
 	    	}
 
-	    	if($_POST['nb_repos']>=0)$valid=true;
+	    	if($_POST['nb_repos']>=0 && $_POST['nb_repos']<10)$valid=true;
 
 	    	if($valid){
       			if(!exist_annee($_POST['annee'])){
@@ -56,7 +56,10 @@
 		    		$req_commit='COMMIT';
 					$cur = PreparerRequete($conn,$req_commit);
 		    		$res = ExecuterRequete($cur);
+<<<<<<< HEAD
+=======
 		    		header("location:form_annee_look.php");
+>>>>>>> origin/master
 		    	}
 		    	else {?><script>window.alert("Année déjà existante");</script><?php
 					echo "";}
