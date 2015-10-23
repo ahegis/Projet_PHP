@@ -5,9 +5,9 @@
 		<h1 style='font-variant:small-caps'>Suppression d'un Coureur de la Base</h1>
 
 <?php
-		include("fonc_oracle.php");
-		include("fonc_sql.php");
-		include("log_bdd.php");
+		include("../Fonctions/fonc_oracle.php");
+		include("../Fonctions/fonc_sql.php");
+		include("../Core/log_bdd.php");
       	$conn = OuvrirConnexion($login, $mdp,$instance);
       	$selec_suppr = 'SELECT * FROM tdf_coureur WHERE N_COUREUR=\''.$_POST['n_coureur'].'\'';
       	$cur = PreparerRequete($conn,$selec_suppr);

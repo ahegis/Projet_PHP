@@ -1,5 +1,5 @@
 <?php
-	include("header.html");
+	include("../Core/header.html");
 ?>
 
 	<title>Sélection de Table pour Consultation</title>
@@ -23,11 +23,11 @@
 			if(isset($_POST['table'])){
 				$table=$_POST['table'];
 				switch($table){
-					case "TDF_COUREUR":	header("location:form_coureur_look.php");
+					case "TDF_COUREUR":	header("location:../Coureur/form_coureur_look.php");
 										break;
-					case "TDF_ANNEE" : 	header("location:form_annee_look.php");
+					case "TDF_ANNEE" : 	header("location:../Annee/form_annee_look.php");
 										break;
-					case "TDF_EPREUVE" : header("location:form_epreuve_look.php");
+					case "TDF_EPREUVE" : header("location:../Epreuve/form_epreuve_look.php");
 										break;
 				}
 			}

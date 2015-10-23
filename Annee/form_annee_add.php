@@ -1,14 +1,14 @@
 <?php
-	include("header.html");
+	include("../Core/header.html");
 ?>
 	<title>Formulaire Ajout Annee</title>
 	<h1 style='font-variant:small-caps;text-align:center'>Ajout d'une Annee dans la Base</h1>
 
 		<?php
-		include("fonc_oracle.php");
-		include("fonc_text.php");
-		include("fonc_sql.php");
-		include("log_bdd.php");
+		include("../Fonctions/fonc_oracle.php");
+		include("../Fonctions/fonc_text.php");
+		include("../Fonctions/fonc_sql.php");
+		include("../Core/log_bdd.php");
       	$conn = OuvrirConnexion($login, $mdp,$instance);
       	$req = 'SELECT code_tdf,nom FROM tdf_pays order by nom';
       	$cur = PreparerRequete($conn,$req);

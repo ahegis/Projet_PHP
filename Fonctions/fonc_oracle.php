@@ -13,7 +13,7 @@ function OuvrirConnexion($session,$mdp,$instance)
     case 12514 : $msg_error="Base éteinte";break;
   }
   echo "Erreur de Connection à la Base : $msg_error<br><br>";
-	echo "<form action = 'index.php' method='post' enctype='application/x-www-form-urlencoded'>
+	echo "<form action = '../Core/index.php' method='post' enctype='application/x-www-form-urlencoded'>
 				<input type='submit' value='Retour'>
 		  </form>";
 	exit;

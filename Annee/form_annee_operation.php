@@ -1,5 +1,5 @@
 <?php
-	include("header.html");
+	include("./Core/header.html");
 ?>
 
 <title>Formulaire Operation Annee</title>
@@ -7,10 +7,10 @@
 
 
 <?php
-		include("fonc_oracle.php");
-		include("fonc_sql.php");
-		include("fonc_text.php");
-		include("log_bdd.php");
+		include("../Fonctions/fonc_oracle.php");
+		include("../Fonctions/fonc_sql.php");
+		include("../Fonctions/fonc_text.php");
+		include("../Core/log_bdd.php");
       	$conn = OuvrirConnexion($login, $mdp,$instance);
       	$selec_suppr = 'SELECT ANNEE,JOUR_REPOS FROM tdf_annee WHERE ANNEE=\''.$_POST['annee'].'\'';
       	$cur = PreparerRequete($conn,$selec_suppr);

@@ -1,12 +1,12 @@
 <?php
-	include("header.html");
+	include("../Core/header.html");
 ?>
 		<title>Formulaire Consultation Annee</title>
 		<h1 style='font-variant:small-caps'>Consultation des Annees de la Base</h1>
 
 <?php
-		include("fonc_oracle.php");
-		include("log_bdd.php");
+		include("../Fonctions/fonc_oracle.php");
+		include("../Core/log_bdd.php");
       	$conn = OuvrirConnexion($login, $mdp,$instance);
       	$req = 'SELECT * FROM tdf_annee order by annee desc';
       	$cur = PreparerRequete($conn,$req);
@@ -26,4 +26,4 @@
 	    ?></table><?php
 	    FermerConnexion($conn);
 
-	    include("footer.html");
+	    include("../Core/footer.html");

@@ -1,12 +1,12 @@
 <?php
-	include("header.html");
+	include("../Core/header.html");
 ?>
 		<title>Formulaire Consultation Epreuve</title>
 		<h1 style='font-variant:small-caps'>Consultation des Epreuves de la Base</h1>
 
 <?php
-		include("fonc_oracle.php");
-		include("log_bdd.php");
+		include("../Fonctions/fonc_oracle.php");
+		include("../Core/log_bdd.php");
       	$conn = OuvrirConnexion($login, $mdp,$instance);
       	$req_epreuve = 'SELECT * FROM tdf_epreuve order by annee desc,n_epreuve';
       	$cur = PreparerRequete($conn,$req_epreuve);
@@ -31,4 +31,4 @@
 	    /*<*/
 	    FermerConnexion($conn);
 
-	    include("footer.html");
+	    include("../Core/footer.html");

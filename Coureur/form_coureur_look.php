@@ -1,12 +1,12 @@
 <?php
-	include("header.html");
+	include("../Core/header.html");
 ?>
 		<title>Formulaire Consultation Coureur</title>
 		<h1 style='font-variant:small-caps'>Consultation des Coureurs de la Base</h1>
 
 <?php
-		include("fonc_oracle.php");
-		include("log_bdd.php");
+		include("../Fonctions/fonc_oracle.php");
+		include("../Core/log_bdd.php");
       	$conn = OuvrirConnexion($login, $mdp,$instance);
       	$req = 'SELECT * FROM tdf_coureur order by n_coureur desc';
       	$cur = PreparerRequete($conn,$req);
@@ -31,4 +31,4 @@
 	    /*<*/
 	    FermerConnexion($conn);
 
-	    include("footer.html");
+	    include("../Core/footer.html");

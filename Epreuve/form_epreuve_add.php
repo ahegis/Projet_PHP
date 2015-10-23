@@ -1,14 +1,14 @@
 <?php
-	include("header.html");
+	include("../Core/header.html");
 ?>
 	<title>Formulaire Ajout Epreuve</title>
 	<h1 style='font-variant:small-caps;text-align:center'>Ajout d'une Epreuve dans la Base</h1>
 		
 		<?php
-		include("fonc_oracle.php");
-		include("fonc_text.php");
-		include("fonc_sql.php");
-		include("log_bdd.php");
+		include("../Fonctions/fonc_oracle.php");
+		include("../Fonctions/fonc_text.php");
+		include("../Fonctions/fonc_sql.php");
+		include("../Core/log_bdd.php");
       	$conn = OuvrirConnexion($login, $mdp,$instance);
       	$req_annee = 'SELECT annee,jour_repos FROM tdf_annee order by annee';
       	$cur = PreparerRequete($conn,$req_annee);
@@ -111,4 +111,4 @@
 			}
 			else {?><script>window.alert("Champ(s) Invalide(s) ( Incomplet(s) ou Vide(s) )");</script><?php echo "";}
 		}
-		include("footer.html");
+		include("../Core/footer.html");
